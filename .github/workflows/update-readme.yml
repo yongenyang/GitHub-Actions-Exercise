@@ -1,0 +1,29 @@
+name: Update README
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:   # 手動觸發用
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update README section
+        run: |
+          # 找到 README 中標記區域，替換為當前時間
+          sed -i '/<!--START_SECTION-->/, /<!--END_SECTION-->/c\<!--START_SECTION-->\nLast updated: '$(date -u)'\n<!--END_SECTION-->' README.md
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "chore: update README timestamp" || echo "No changes to commit"
+          git push
+        env:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
