@@ -15,8 +15,8 @@ jobs:
 
       - name: Update README section
         run: |
-          # 找到 README 中標記區域，替換為當前時間
-          sed -i '/<!--START_SECTION-->/, /<!--END_SECTION-->/c\<!--START_SECTION-->\nLast updated: '$(date -u)'\n<!--END_SECTION-->' README.md
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          sed -i "/<!--START_SECTION-->/, /<!--END_SECTION-->/c\<!--START_SECTION-->\nLast updated: ${TIMESTAMP}\n<!--END_SECTION-->" README.md
 
       - name: Commit changes
         run: |
