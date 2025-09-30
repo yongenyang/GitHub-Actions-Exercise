@@ -8,6 +8,6 @@ This repository demonstrates automation using GitHub Actions and project managem
 - Integrate with issue tracking
 
 ## 📊 Latest Updates
-<!-- AUTO-UPDATE:START -->
+<!--START_SECTION-->
 Placeholder text for automation test
-<!-- AUTO-UPDATE:END -->
+<!--END_SECTION-->
