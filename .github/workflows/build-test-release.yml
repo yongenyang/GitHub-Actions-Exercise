@@ -44,9 +44,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifact
+          path: dist
       - name: Release Dev Build
         env:
-          GITHUB_TOKEN: ${{ secrets.PATOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Deploying dev release..."
+          ls dist
           gh release create "dev-$(date +%s)" dist/* --notes "Automated mock release after successful tests"
