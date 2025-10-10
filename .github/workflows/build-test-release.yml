@@ -38,7 +38,8 @@ jobs:
       - name: Run Automated Tests
         run: |
           echo "Running mock tests..."
-          echo "All tests passed!"
+          echo "This test fails intentionally!"
+          exit 1
 
   release:
     runs-on: ubuntu-latest
