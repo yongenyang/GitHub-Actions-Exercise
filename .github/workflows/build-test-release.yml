@@ -64,6 +64,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Deploy to Staging
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,6 +78,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Deploy to Production
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
