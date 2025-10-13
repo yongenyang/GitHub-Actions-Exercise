@@ -59,22 +59,26 @@ jobs:
           echo "Running Integration Tests in $TEST_ENV environment..."
           echo "All integration tests passed!"
 
-  release:
-    runs-on: ubuntu-latest
+  deploy-staging:
     needs: test-integration
-    environment: dev
+    runs-on: ubuntu-latest
+    environment: staging
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact
-          path: dist
-      - name: Release Dev Build
+      - name: Deploy to Staging
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Deploying dev release..."
-          ls dist
-          gh release create "dev-$(date +%s)" dist/* --notes "Automated mock release after successful tests"
+          echo "Deploying to staging environment..."
+          gh release create "staging-$(date +%s)" dist/* --notes "Testing pre-production release"
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy to Production
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Deploying to production environment..."
+          gh release create "prod-$(date +%s)" dist/* --notes "Production release after staging approval"
