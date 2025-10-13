@@ -64,13 +64,17 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: dist
       - name: Deploy to Staging
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Deploying to staging environment..."
+          ls dist
           gh release create "staging-$(date +%s)" dist/* --notes "Testing pre-production release"
 
   deploy-production:
@@ -78,11 +82,15 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: dist
       - name: Deploy to Production
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Deploying to production environment..."
+          ls dist
           gh release create "prod-$(date +%s)" dist/* --notes "Production release after staging approval"
