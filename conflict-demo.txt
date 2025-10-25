@@ -1,2 +1,3 @@
 Hello from main branch.
+This line is edited by collaborator B.
 This line is edited by collaborator A.
