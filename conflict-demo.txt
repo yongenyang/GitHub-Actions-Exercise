@@ -1,2 +1,2 @@
 Hello from main branch.
-This line will be edited by both collaborators.
+This line is edited by collaborator A.
